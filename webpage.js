@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const homeLink = document.getElementById("homeLink");
     const taskManagerLink = document.getElementById("taskManagerLink");
     const counterLink = document.getElementById("counterLink");
+    const randomGenLink = document.getElementById("randomgenLink");
 
     // Function to load Home content
     function loadHome() {
@@ -156,11 +157,52 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.show();
     }
 
+    // Function to load the random quote generator UI
+function loadradomQuoteGenerator() {
+    content.innerHTML = ` 
+        <div class="container text-center" id="quotediv" style="padding:3%;">
+            <h1>Random Quote Generator</h1>   
+            <div class="container" id="quoteGenerator" >            
+                <blockquote class="blockquote  text-black-emphasis">
+                    <q id="quote">Do or Die</q>
+                    <h6 id="author">Mahatma Gandhi</h6>
+                </blockquote>
+                <button class="btn text-black mt-2" type="button" id="quoteGeneratorBtn">Generate a New Quote</button>
+            </div>     
+        </div>   
+    `;
+    document.getElementById("quote").style.backgroundColor = "lightsalmon";
+    
+    // Attach event listener to the button
+    document.getElementById("quoteGeneratorBtn").addEventListener("click", generateQuote);
+
+    // Store the active page in localStorage
+    localStorage.setItem("activePage", "radomQuoteGenerator");
+}
+
+// Function to fetch and display a new quote
+async function generateQuote() {
+    console.log("start Fetching a new quote...");
+    try {
+        const response = await fetch('https://dummyjson.com/quotes/random');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();        
+
+        // Update the DOM with the new quote and author
+        document.getElementById("quote").textContent = data.quote;
+        document.getElementById("author").textContent = data.author;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
    
     // Event listeners for navbar links
     homeLink.addEventListener("click", loadHome);
     taskManagerLink.addEventListener("click", loadTaskManager);
     counterLink.addEventListener("click", loadCounter);
+    randomGenLink.addEventListener("click",loadradomQuoteGenerator);
 
     
     let activeTab = localStorage.getItem("activePage");
@@ -168,7 +210,10 @@ document.addEventListener("DOMContentLoaded", function () {
         loadTaskManager();
     }else if(activeTab === "Counter"){
         loadCounter();
-    }else{
+    }else if(activeTab === "radomQuoteGenerator"){
+        loadradomQuoteGenerator();
+    }
+    else{
         // Load Home page by default
         loadHome();
         localStorage.setItem("activePage","Home");
