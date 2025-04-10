@@ -9,6 +9,7 @@
             "request": "launch",
             "name": "Open index.html",
             "file": "d:\\sakil\\Javascript web projects\\index.html"
+            "type" : "module";
         }
     ]
 }
