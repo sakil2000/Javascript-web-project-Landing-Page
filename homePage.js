@@ -1,12 +1,13 @@
 import loadTaskManager from './taskManagerModule.js';
 import loadradomQuoteGenerator from './queryGeneratorModule.js';
+import loadCurrencyConverter from './currencyConverter.js';
 
 document.addEventListener("DOMContentLoaded", function () {
     const content = document.getElementById("content");
     const homeLink = document.getElementById("homeLink");
     const taskManagerLink = document.getElementById("taskManagerLink");
-    const counterLink = document.getElementById("counterLink");
-    const randomGenLink = document.getElementById("randomgenLink");
+    const currencyConverterLink = document.getElementById("currencyConverter");
+    const randomGenLink = document.getElementById("randomgenLink"); 
 
     // Function to load Home content
     function loadHome() {
@@ -26,61 +27,18 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("activePage","Home");
     }
    
-    // Function to load Counter Page
-    function loadCounter() {
-        content.innerHTML = `
-            <h1>Counter</h1>
-            <div class="counter-container">
-                <h2 id="counterValue">0</h2>
-                <button class="btn btn-primary" id="increment">Increment</button>
-                <button class="btn btn-warning" id="decrement">Decrement</button>
-                <button class="btn btn-danger" id="reset">Reset</button>
-            </div>
-        `;
-
-        setupCounter();
-        localStorage.setItem("activePage","Counter");
-    }
-
-    function setupCounter() {
-        let count = localStorage.getItem("countValue") 
-        ? parseInt(localStorage.getItem("countValue"))  
-        : (localStorage.setItem("countValue", 0), 0);
-
-        const counterValue = document.getElementById("counterValue");
-        counterValue.textContent = count;
-
-        document.getElementById("increment").addEventListener("click", function () {
-            count++;
-            counterValue.textContent = count;
-            localStorage.setItem("countValue",count);
-        });
-
-        document.getElementById("decrement").addEventListener("click", function () {
-            count--;
-            counterValue.textContent = count;
-            localStorage.setItem("countValue",count);
-        });
-        document.getElementById("reset").addEventListener("click",function(){
-            count = 0; 
-            counterValue.textContent = count;
-            localStorage.removeItem("countValue",count);
-        });
-
-    }
-   
     // Event listeners for navbar links
     homeLink.addEventListener("click", loadHome);
     taskManagerLink.addEventListener("click", loadTaskManager);
-    counterLink.addEventListener("click", loadCounter);
+    currencyConverterLink.addEventListener("click", loadCurrencyConverter);
     randomGenLink.addEventListener("click",loadradomQuoteGenerator);
 
     
     let activeTab = localStorage.getItem("activePage");
     if(activeTab === "TaskManager"){
         loadTaskManager();
-    }else if(activeTab === "Counter"){
-        loadCounter();
+    }else if(activeTab === "currencyConverter"){
+        loadCurrencyConverter();
     }else if(activeTab === "radomQuoteGenerator"){
         loadradomQuoteGenerator();
     }
@@ -92,9 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
 });
-
-export // Function to Show the Modal
-     function showModal(title, message) {
+ 
+// Function to Show the Modal
+export function showModal(title, message) {
          document.getElementById("modalTitle").textContent = title;
          document.getElementById("modalMessage").textContent = message;    
         // Show the Bootstrap modal
@@ -102,3 +60,9 @@ export // Function to Show the Modal
          // Change the title background color
         modal.show();
     }
+    
+export function getSpinner() {
+        return `<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Loading...</span>`;
+        }
+

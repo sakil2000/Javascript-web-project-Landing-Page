@@ -7,10 +7,10 @@ import { showModal } from './homePage.js';
             <h1>Random Quote Generator</h1>   
             <div class="container" id="quoteGenerator" >            
                 <blockquote class="blockquote  text-black-emphasis">
-                    <q id="quote">Do or Die</q>
-                    <h6 id="author">Mahatma Gandhi</h6>
+                    <q id="quote"></q>
+                    <h6 id="author">click the button to fetch a quote</h6>
                 </blockquote>
-                <button class="btn text-black mt-2" type="button" id="quoteGeneratorBtn">Generate a New Quote</button>
+                <button class="btn text-black mt-2" type="button" id="quoteGeneratorBtn">Fetch a Quote</button>
             </div>     
         </div>   
     `;
